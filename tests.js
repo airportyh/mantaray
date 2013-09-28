@@ -1,5 +1,7 @@
 var test = require('tape')
 var Array = require('./index')
+var spy = require('ispy')
+var E = require('emmitt')
 
 test('create', function(t){
   t.equal(new Array().size(), 0)
@@ -68,4 +70,42 @@ test('toArray', function(t){
   t.end()
 })
 
+test('fires on add', function(t){
+  var ray = new Array(1)
+  var onInsert = spy()
+  E.on(ray, 'insert', onInsert)
+  ray.add(2)
+  t.assert(onInsert.called, 'should have called')
+  t.deepEqual(onInsert.lastCall.args, [1, 2])
+  t.end()
+})
 
+test('fires on insert', function(t){
+  var ray = new Array(1, 2)
+  var onInsert = spy()
+  E.on(ray, 'insert', onInsert)
+  ray.insert(1, 3)
+  t.assert(onInsert.called, 'should have called')
+  t.deepEqual(onInsert.lastCall.args, [1, 3])
+  t.end()
+})
+
+test('fires on remove', function(t){
+  var ray = new Array(1, 2)
+  var onRemove = spy()
+  E.on(ray, 'remove', onRemove)
+  ray.remove(1)
+  t.assert(onRemove.called, 'should have called')
+  t.deepEqual(onRemove.lastCall.args, [0, 1])
+  t.end()
+})
+
+test('fires remove on clear', function(t){
+  var ray = new Array(1, 2)
+  var onRemove = spy()
+  E.on(ray, 'remove', onRemove)
+  ray.clear()
+  t.assert(onRemove.called, 'should have called')
+  t.deepEqual(onRemove.lastCall.args, [[0, 1], [1, 2]])
+  t.end()
+})
