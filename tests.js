@@ -56,9 +56,16 @@ test('clear', function(t){
   t.end()
 })
 
+test('indexOf', function(t){
+  var ray = new Array(1, 2, 3)
+  t.equal(ray.indexOf(2), 1)
+  t.end()
+})
+
 test('toArray', function(t){
   var ray = new Array(1, 2, 3)
   t.deepEqual(ray.toArray(), [1, 2, 3])
   t.end()
 })
+
 
