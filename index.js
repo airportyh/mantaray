@@ -3,6 +3,13 @@ var E = require('emmitt')
 module.exports = MantaRay
 
 function MantaRay(){
+  if (!(this instanceof MantaRay)){
+    var f = function(){}
+    f.prototype = MantaRay.prototype
+    var ret = new f
+    MantaRay.apply(ret, arguments)
+    return ret
+  }
   this.arr = Array.prototype.slice.apply(arguments)
 }
 

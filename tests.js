@@ -9,6 +9,13 @@ test('create', function(t){
   t.end()
 })
 
+test('call constructor w/o new dont matter', function(t){
+  t.equal(Array().size(), 0)
+  t.equal(Array(1).size(), 1)
+  t.assert(Array() instanceof Array, 'is instanceof MantaRay')
+  t.end()
+})
+/*
 test('access', function(t){
   var ray = new Array(1)
   t.equal(ray.get(0), 1)
@@ -109,3 +116,4 @@ test('fires remove on clear', function(t){
   t.deepEqual(onRemove.lastCall.args, [[0, 1], [1, 2]])
   t.end()
 })
+*/
