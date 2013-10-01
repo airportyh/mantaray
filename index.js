@@ -1,4 +1,5 @@
 var E = require('emmitt')
+var ecma5 = require('./ecma5arraymethods')
 
 module.exports = MantaRay
 
@@ -30,7 +31,7 @@ MantaRay.prototype = {
     E.emit(this, 'insert', i, obj)
   },
   remove: function(obj){
-    var idx = this.arr.indexOf(obj)
+    var idx = ecma5.indexOf(this.arr, obj)
     this.arr.splice(idx, 1)
     E.emit(this, 'remove', idx, obj)
   },
@@ -60,13 +61,13 @@ MantaRay.prototype = {
     return this.arr
   },
   forEach: function(fun){
-    this.arr.forEach(fun)
+    ecma5.forEach(this.arr, fun)
   },
   map: function(fun){
-    return this.arr.map(fun)
+    return ecma5.map(this.arr, fun)
   },
   filter: function(fun){
-    return this.arr.filter(fun)
+    return ecma5.filter(this.arr, fun)
   }
 }
 

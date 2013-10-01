@@ -107,6 +107,20 @@ test('items change, also changes', function(t){
   t.end()
 })
 
+test('listens to added items', function(t){
+  var bob = { name: 'bob', age: 1 }
+  var mary = { name: 'mary', age: 2 }
+  var source = new Array(bob)
+  var filtered = new FilteredArray(source, function(child){
+    return child.age % 2 === 1
+  })
+  source.add(mary)
+  t.equal(filtered.size(), 1)
+  set(mary, 'age', 3)
+  t.equal(filtered.size(), 2)
+  t.end()
+})
+
 test('clean up', function(t){
   var bob = { name: 'bob', age: 1 }
   var mary = { name: 'mary', age: 2 }

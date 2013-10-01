@@ -1,4 +1,6 @@
 var E = require('emmitt')
+var ecma5 = require('./ecma5arraymethods')
+
 module.exports = FilteredArray
 
 function FilteredArray(arr, fun){
@@ -11,8 +13,7 @@ function FilteredArray(arr, fun){
     if (fun(item)){
       self.indices.push(idx)
     }
-    if (typeof item !== 'object') return
-    E.on(item, 'change', self.$onItemChange)
+    self._registerItemChange(item)
   })
   this.$onInsert = function(idx, item){
     self._onInsert(idx, item)
@@ -57,6 +58,7 @@ FilteredArray.prototype = {
     if (this.fun(item)){
       this._insert(idx, item)
     }
+    this._registerItemChange(item)
   },
   _onRemove: function(idx, item){
     if (this.fun(item)){
@@ -74,7 +76,7 @@ FilteredArray.prototype = {
     }
   },
   _insert: function(idx, item){
-    this.indices = this.indices.map(function(i){
+    this.indices = ecma5.map(this.indices, function(i){
       if (i >= idx) return i + 1
       return i
     })
@@ -83,8 +85,12 @@ FilteredArray.prototype = {
       return one - other
     })
   },
+  _registerItemChange: function(item){
+    if (typeof item !== 'object') return
+    E.on(item, 'change', this.$onItemChange)
+  },
   _remove: function(idx, item){
-    var ii = this.indices.indexOf(idx)
+    var ii = ecma5.indexOf(this.indices, idx)
     if (ii !== -1){
       this.indices.splice(ii, 1)
     }
@@ -92,9 +98,10 @@ FilteredArray.prototype = {
   },
   toArray: function(){
     var source = this.source
-    return this.indices.map(function(idx){
+    function item(idx){
       return source.get(idx)
-    })
+    }
+    return ecma5.map(this.indices, item)
   },
   destroy: function(){
     this.source.forEach(function(item){
