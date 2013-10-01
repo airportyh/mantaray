@@ -1,5 +1,6 @@
 var E = require('emmitt')
 var ecma5 = require('./ecma5arraymethods')
+var filtered = require('./filtered')
 
 module.exports = MantaRay
 
@@ -70,4 +71,6 @@ MantaRay.prototype = {
     return ecma5.filter(this.arr, fun)
   }
 }
+
+MantaRay.filtered = filtered
 
