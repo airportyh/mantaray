@@ -4,7 +4,8 @@
   "description": "Javascript array with change notifications.",
   "main": "index.js",
   "dependencies": {
-    "emmitt": "~0.0.0"
+    "emmitt": "~0.0.0",
+    "setter": "0.0.0"
   },
   "devDependencies": {
     "ispy": "~0.1.2",

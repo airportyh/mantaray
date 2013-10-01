@@ -1,0 +1,15 @@
+launchers:
+  node:
+    command: node tests.js
+    protocol: tap
+src_files:
+- "*.js"
+src_files_ignore:
+- "__tests.js"
+serve_files:
+- "__tests.js"
+before_tests: browserify tests.js -o __tests.js
+test_page: "tests.html"
+launch_in_dev:
+- node
+- chrome

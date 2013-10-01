@@ -58,6 +58,15 @@ MantaRay.prototype = {
   },
   toArray: function(){
     return this.arr
+  },
+  forEach: function(fun){
+    this.arr.forEach(fun)
+  },
+  map: function(fun){
+    return this.arr.map(fun)
+  },
+  filter: function(fun){
+    return this.arr.filter(fun)
   }
 }
 
